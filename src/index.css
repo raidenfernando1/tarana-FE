@@ -1,0 +1,50 @@
+:root {
+  --bg-color: rgb(35, 35, 35);
+  --txt-color: rgb(190, 190, 190);
+  --txt-color-sub: rgb(130, 130, 130);
+  --bd-color: rgb(190, 190, 190);
+  --bd-radius: 8px;
+  --bd-radius-sm: 4px;
+  --gap-size: 10px;
+
+  --btn-bg: rgb(190, 190, 190);
+  --btn-txt: rgb(35, 35, 35);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Syne", serif;
+  font-weight: normal;
+  letter-spacing: 0.8px;
+}
+
+h1 {
+  font-size: 16px;
+}
+
+input {
+  color: inherit;
+}
+
+button {
+  background-color: var(--btn-bg);
+  padding: 7px;
+  cursor: pointer;
+  border: 1px solid var(--bd-color);
+  border-radius: var(--bd-radius-sm);
+  transition: 300ms;
+}
+
+button > svg {
+  color: var(--btn-txt);
+}
+
+button:hover {
+  background-color: transparent;
+}
+
+button:hover > svg {
+  color: var(--txt-color);
+}
