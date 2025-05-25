@@ -130,7 +130,7 @@ const TopCTA = styled.div`
 `;
 
 const Container = styled(motion.div)`
-  z-index: 999;
+  z-index: 99999999;
   position: fixed;
   top: 0;
   left: 0;

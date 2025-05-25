@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+import QuestionCard from "./QuestionCard";
+import fetchFrequentQuestions from "../../hooks/getFrequentQuestions";
+import { useState, useEffect } from "react";
 
 const Container = styled.div`
   height: 100%;
@@ -18,10 +21,28 @@ const Questions = styled.ul`
 `;
 
 export default function QuestionPanel() {
+  const [questions, setQuestions] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function loadQuestions() {
+      const data = await fetchFrequentQuestions();
+      if (data) {
+        setQuestions(data.map((item: { question: string }) => item.question));
+      }
+    }
+    loadQuestions();
+  }, []);
+
   return (
     <Container>
       <h1>Frequently Asked Questions</h1>
-      <Questions></Questions>
+      <Questions>
+        {questions.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
+          questions.map((q, i) => <QuestionCard key={i} question={q} />)
+        )}
+      </Questions>
     </Container>
   );
 }

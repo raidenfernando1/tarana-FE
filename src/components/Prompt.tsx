@@ -26,7 +26,10 @@ export default function Prompt({
     {
       name: "Announcement",
       icon: <Book strokeWidth={iconSize} />,
-      onClick: () => {},
+      onClick: () => {
+        sendPrompt({ input: "What is the current announcement" });
+        setGreet(false);
+      },
       type: "button" as const,
     },
     {
