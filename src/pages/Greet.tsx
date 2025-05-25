@@ -1,52 +1,23 @@
 import styled from "@emotion/styled";
-import { Mic, ArrowUp, Book } from "react-feather";
+import Prompt from "../components/Prompt";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Container = styled.main`
+const Container = styled(motion.main)`
   height: 100dvh;
   width: 100%;
+  position: fixed;
+  z-index: 2;
+  background-color: var(--bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid red;
+  backdrop-filter: blur(0px);
 `;
 
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   gap: 50px;
-`;
-
-const Prompt = styled.div`
-  padding: 20px;
-  border: 1px solid var(--bd-color);
-  border-radius: var(--bd-radius);
-  min-width: 650px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-
-  > input {
-    font-size: 1.2rem;
-    padding: 8px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-  }
-`;
-
-const CTA = styled.div`
-  display: flex;
-  gap: var(--gap-size);
-
-  > button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  > button:last-of-type {
-    margin-left: auto;
-  }
 `;
 
 const Introduction = styled.div`
@@ -60,42 +31,42 @@ const Introduction = styled.div`
   }
 `;
 
-const buttons = [
-  {
-    name: "Microphone",
-    icon: <Mic strokeWidth={1.3} />,
+const blurVariants = {
+  hidden: {
+    opacity: 0,
+    backdropFilter: "blur(0px)",
   },
-  {
-    name: "Announcement",
-    icon: <Book strokeWidth={1.3} />,
+  visible: {
+    opacity: 1,
+    backdropFilter: "blur(4px)",
+    transition: { duration: 0.5 },
   },
-  {
-    name: "Submit",
-    icon: <ArrowUp strokeWidth={1.3} />,
+  exit: {
+    opacity: 0,
+    backdropFilter: "blur(0px)",
+    transition: { duration: 0.5 },
   },
-];
+};
 
 const Greet = () => {
   return (
-    <Container>
-      <Wrapper>
-        <Introduction>
-          <h1>Hello, I'm Tarana. Ask me anything.</h1>
-          <p>I am an AI information assitant regarding ICCT Colleges</p>
-          <p>Please dont ask me anything inappropriate.</p>
-        </Introduction>
-        <Prompt>
-          <input placeholder="..." />
-          <CTA>
-            {buttons.map((btn, index) => (
-              <button key={index} aria-label={btn.name}>
-                {btn.icon}
-              </button>
-            ))}
-          </CTA>
-        </Prompt>
-      </Wrapper>
-    </Container>
+    <AnimatePresence>
+      <Container
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={blurVariants}
+      >
+        <Wrapper>
+          <Introduction>
+            <h1>Hello, I'm Tarana. Ask me anything.</h1>
+            <p>I am an AI information assistant regarding ICCT Colleges</p>
+            <p>Please don't ask me anything inappropriate.</p>
+          </Introduction>
+          <Prompt iconSize={2} variant="greeting" />
+        </Wrapper>
+      </Container>
+    </AnimatePresence>
   );
 };
 

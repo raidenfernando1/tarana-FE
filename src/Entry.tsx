@@ -6,6 +6,7 @@ const Entry: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<App />} />
+      <Route path="/chat" element={<App />} />
     </Routes>
   );
 };

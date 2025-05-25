@@ -48,3 +48,23 @@ button:hover {
 button:hover > svg {
   color: var(--txt-color);
 }
+
+textarea {
+  border: none;
+  background-color: none;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+  border-radius: 10px;
+  margin-block: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--btn-bg);
+  border-radius: 8px;
+}
