@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import sendPrompt from "../../hooks/sendPrompt";
+import debounce from "lodash/debounce";
+import { useCallback } from "react";
 
 const Container = styled.button`
   all: unset;
@@ -13,9 +15,17 @@ const Container = styled.button`
   }
 `;
 
+const debouncedSend = debounce((question: string) => {
+  sendPrompt({ input: question });
+}, 1000);
+
 export default function QuestionCard({ question }: { question: string }) {
+  const handleClick = useCallback(() => {
+    debouncedSend(question);
+  }, [question]);
+
   return (
-    <Container type="button" onClick={() => sendPrompt({ input: question })}>
+    <Container type="button" onClick={handleClick}>
       <p>{question}</p>
     </Container>
   );

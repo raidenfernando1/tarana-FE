@@ -54,6 +54,7 @@ export default function Prompt({
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
         placeholder="Enter question here"
+        maxLength={200}
       />
       <CTA>
         {buttons.map((btn, index) => {

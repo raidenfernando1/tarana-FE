@@ -19,7 +19,6 @@ export default function Microphone() {
   if (!micState) return null;
 
   const startRecording = async () => {
-    console.log("Starting recording...");
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
@@ -47,13 +46,20 @@ export default function Microphone() {
 
       mediaRecorder.start();
       setIsRecording(true);
+
+      // Set max recording time: stop after 20 seconds
+      setTimeout(() => {
+        if (mediaRecorder.state === "recording") {
+          mediaRecorder.stop();
+          setIsRecording(false);
+        }
+      }, 20000);
     } catch (error) {
       console.error("Failed to start recording:", error);
     }
   };
 
   const stopRecording = () => {
-    console.log("Stopping recording...");
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);

@@ -4,6 +4,7 @@ import { client } from "../components/Clients/Groq";
 import type { ChatCompletionAssistantMessageParam } from "groq-sdk/resources/chat.mjs";
 import { requestData } from "../utils/requestData";
 import { ToastAtom, PopupStore } from "../store/PopupAtom";
+import { fetchAnnouncements } from "./fetchAnnouncement";
 
 export default async function sendPrompt({ input }: { input: string }) {
   GroqStore.set(isLoading, true);
@@ -14,19 +15,43 @@ export default async function sendPrompt({ input }: { input: string }) {
   GroqStore.set(history, updatedHistory);
 
   try {
-    const isQuestion = await getHeat({ message: input });
+    const normalizedInput = input.trim().toLowerCase();
+    let systemMessage = null;
 
-    if (isQuestion) {
-      const fetchedData = await requestData({ question: input });
+    // Handle announcement question
+    if (normalizedInput === "what is the current announcement") {
+      const { announcements } = await fetchAnnouncements();
 
-      if (fetchedData.found) {
-        const systemMessage = {
+      if (announcements?.length > 0) {
+        const latest = announcements[0]; // or use a specific ID if needed
+        systemMessage = {
           role: "system",
-          content: fetchedData.content,
+          content: `Current announcement: ${latest.content}`,
         };
-        updatedHistory = [...updatedHistory, systemMessage];
-        GroqStore.set(history, updatedHistory);
+      } else {
+        systemMessage = {
+          role: "system",
+          content: "There are currently no announcements available.",
+        };
       }
+    } else {
+      const isQuestion = await getHeat({ message: input });
+
+      if (isQuestion) {
+        const fetchedData = await requestData({ question: input });
+
+        if (fetchedData.found) {
+          systemMessage = {
+            role: "system",
+            content: fetchedData.content,
+          };
+        }
+      }
+    }
+
+    if (systemMessage) {
+      updatedHistory = [...updatedHistory, systemMessage];
+      GroqStore.set(history, updatedHistory);
     }
 
     const response = await client.chat.completions.create({
