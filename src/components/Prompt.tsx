@@ -78,7 +78,6 @@ export default function Prompt({
   );
 }
 
-// Your existing styled components remain the same
 const Container = styled.form<{ variant: "greeting" | "chat" }>`
   padding: 20px;
   border: 1px solid var(--bd-color);
