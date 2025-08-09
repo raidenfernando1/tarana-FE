@@ -26,7 +26,7 @@ Frontend:
 <img width="1438" height="818" alt="tarana pic 1" src="https://github.com/user-attachments/assets/4cbe2ed1-42ba-470d-9493-92d8590e19ad" />
 <img width="1440" height="816" alt="tarana pic 2" src="https://github.com/user-attachments/assets/b30a6e0e-6fdd-409c-a75f-817e873de880" />
 
-Backend:
+Decoupled CMS:
 
 <img width="1439" height="837" alt="cms 3" src="https://github.com/user-attachments/assets/519ded24-8c1b-4cd5-989b-ad1fdb68998d" />
 <img width="1442" height="842" alt="cms 2" src="https://github.com/user-attachments/assets/10f8f3f0-9f2d-4c3a-9b38-16537bfb4403" />
